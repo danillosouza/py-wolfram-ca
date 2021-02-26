@@ -1,6 +1,7 @@
 import sys
 import pygame
 import config
+import rules
 
 pygame.init()
 cfg = config.get()
@@ -14,8 +15,15 @@ pygame.display.set_caption(cfg.window.title)
 cols, rows = int(cfg.window.width / cfg.block.size), int(cfg.window.height / cfg.block.size)
 grid = [[0 for i in range(cols)] for j in range(rows)]
 
-# one-dimensional ca, starting from top row, middle col
-grid[0][int(cols / 2)] = 1
+# todo: get as parameters
+chosen_rule = 90
+direction = rules.UP
+
+# starting position at the center of top screen
+if direction == rules.DOWN:
+    grid[0][round(cols / 2)] = 1
+elif direction == rules.UP:
+    grid[-1][round(cols / 2)] = 1
 
 # main loop
 while True:
@@ -41,5 +49,6 @@ while True:
             # outlines
             pygame.draw.line(window, cfg.colors.grid, (pos_x, pos_y), (pos_x, cfg.window.height))
             pygame.draw.line(window, cfg.colors.grid, (pos_x, pos_y), (cfg.window.height, pos_y))
-    
+
+    grid = rules.advance_grid(grid, rules.get_rule(chosen_rule), direction)
     pygame.display.update()
