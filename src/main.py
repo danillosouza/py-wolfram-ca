@@ -16,7 +16,7 @@ cols, rows = int(cfg.window.width / cfg.block.size), int(cfg.window.height / cfg
 grid = [[0 for i in range(cols)] for j in range(rows)]
 
 # todo: get as parameters
-chosen_rule = 90
+chosen_rule = 182
 direction = rules.UP
 
 # starting position at the center of top screen
