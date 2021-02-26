@@ -14,6 +14,9 @@ pygame.display.set_caption(cfg.window.title)
 cols, rows = int(cfg.window.width / cfg.block.size), int(cfg.window.height / cfg.block.size)
 grid = [[0 for i in range(cols)] for j in range(rows)]
 
+# one-dimensional ca, starting from top row, middle col
+grid[0][int(cols / 2)] = 1
+
 # main loop
 while True:
     clock.tick(60)
@@ -29,8 +32,11 @@ while True:
             pos_x = col * cfg.block.size
             pos_y = row * cfg.block.size
 
-            # block
-            pygame.draw.rect(window, cfg.colors.background, (pos_x, pos_y, cfg.block.size, cfg.block.size))
+            # dead/alive drawing
+            if grid[row][col] == 1:
+                pygame.draw.rect(window, cfg.colors.active, (pos_x, pos_y, cfg.block.size, cfg.block.size))
+            else:
+                pygame.draw.rect(window, cfg.colors.background, (pos_x, pos_y, cfg.block.size, cfg.block.size))
 
             # outlines
             pygame.draw.line(window, cfg.colors.grid, (pos_x, pos_y), (pos_x, cfg.window.height))
