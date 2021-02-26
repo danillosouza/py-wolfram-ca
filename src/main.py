@@ -1,24 +1,23 @@
 import sys
 import pygame
+import config
 
 pygame.init()
-
-W, H = 600, 350
-S = 5
+cfg = config.get()
 
 # setting up the main window
 clock = pygame.time.Clock()
-window = pygame.display.set_mode((W, H))
-pygame.display.set_caption('Demo')
+window = pygame.display.set_mode((cfg.window.width, cfg.window.height))
+pygame.display.set_caption(cfg.window.title)
 
 # grid structure
-cols, rows = int(W/S), int(H/S)
+cols, rows = int(cfg.window.width / cfg.block.size), int(cfg.window.height / cfg.block.size)
 grid = [[0 for i in range(cols)] for j in range(rows)]
 
 # main loop
 while True:
     clock.tick(60)
-    window.fill((0, 0, 0))
+    window.fill(cfg.colors.background)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -27,14 +26,14 @@ while True:
     
     for col in range(cols):
         for row in range(rows):
-            pos_x = col * S
-            pos_y = row * S
+            pos_x = col * cfg.block.size
+            pos_y = row * cfg.block.size
 
             # block
-            pygame.draw.rect(window, (0, 0, 0), (pos_x, pos_y, S, S))
+            pygame.draw.rect(window, cfg.colors.background, (pos_x, pos_y, cfg.block.size, cfg.block.size))
 
             # outlines
-            pygame.draw.line(window, (20, 20, 20), (pos_x, pos_y), (pos_x, H))
-            pygame.draw.line(window, (20, 20, 20), (pos_x, pos_y), (W, pos_y))
+            pygame.draw.line(window, cfg.colors.grid, (pos_x, pos_y), (pos_x, cfg.window.height))
+            pygame.draw.line(window, cfg.colors.grid, (pos_x, pos_y), (cfg.window.height, pos_y))
     
     pygame.display.update()

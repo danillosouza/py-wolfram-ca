@@ -1,0 +1,10 @@
+window:
+  title: 'Demo Grid World'
+  width: 600
+  height: 350
+block:
+  size: 5
+colors:
+  background: [0, 0, 0]
+  active: [255, 255, 255]
+  grid: [20, 20, 20]
